@@ -194,6 +194,27 @@
     @keyframes pulse-g { 0% { box-shadow: 0 0 0 0 rgba(110,231,183,.4); } 70% { box-shadow: 0 0 0 8px rgba(110,231,183,0); } 100% { box-shadow: 0 0 0 0 rgba(110,231,183,0); } }
     .s-txt { font-family: var(--font-data); font-size: .52rem; color: rgba(245,243,238,.35); letter-spacing: .2em; text-transform: uppercase; }
 
+    /* Brand links */
+    a.marca-pill { text-decoration: none; cursor: pointer; }
+
+    /* CNDD edition photos */
+    .ed-photo { grid-column: 1 / -1; width: 100%; height: 9rem; object-fit: cover; object-position: center 25%; border-radius: .75rem; margin-top: .75rem; opacity: .78; transition: opacity .3s; display: block; }
+    .edition-tl-item:hover .ed-photo { opacity: 1; }
+
+    /* Smart System evento card with image */
+    .evento-card-img { width: 100%; height: 9rem; object-fit: cover; object-position: center 40%; border-radius: .75rem; margin-top: 1rem; opacity: .8; transition: opacity .3s; display: block; }
+    .evento-card:hover .evento-card-img { opacity: 1; }
+
+    /* Body Shop Tesla section */
+    .bs-tesla { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch; margin: 3.5rem 0; background: var(--negro); border-radius: var(--r-lg); overflow: hidden; }
+    .bs-tesla-img { width: 100%; height: 100%; min-height: 20rem; object-fit: cover; object-position: center; display: block; }
+    .bs-tesla-content { padding: 2.75rem; display: flex; flex-direction: column; justify-content: center; }
+    .bs-tesla-tag { font-family: var(--font-data); font-size: .55rem; letter-spacing: .2em; text-transform: uppercase; color: var(--rojo); margin-bottom: .85rem; }
+    .bs-tesla-tag::before { content: '// '; opacity: .5; }
+    .bs-tesla-h3 { font-family: var(--font-title); font-weight: 700; font-size: 1.4rem; color: var(--blanco); margin-bottom: .85rem; line-height: 1.1; letter-spacing: -.02em; }
+    .bs-tesla-desc { font-family: var(--font-data); font-size: .62rem; color: rgba(245,243,238,.42); line-height: 2; }
+    @media (max-width: 900px) { .bs-tesla { grid-template-columns: 1fr; } .bs-tesla-img { min-height: 14rem; } }
+
     /* RESPONSIVE */
     @media (max-width: 900px) {
       .hdr-nav { display: none; }
@@ -321,6 +342,12 @@
             <span class="evento-list">Gtechniq &nbsp;·&nbsp; Meguiar's &nbsp;·&nbsp; RUPES &nbsp;·&nbsp; Nanoskin &nbsp;·&nbsp; Symplex &nbsp;·&nbsp; Menzerna &nbsp;·&nbsp; y más marcas del portafolio</span>
           </div>
         </div>
+        <div class="evento-card">
+          <div class="evento-label">Colaboración</div>
+          <div class="evento-title">Tesla México</div>
+          <div class="evento-desc">Más que una colaboración — una amistad. Hemos trabajado lado a lado con Tesla México en eventos exclusivos, siendo parte del movimiento que lidera la movilidad eléctrica en el país.</div>
+          <img src="IMG/tesla-showroom.jpg" alt="Smart System x Tesla México" class="evento-card-img">
+        </div>
       </div>
     </div>
   </div>
@@ -337,24 +364,24 @@
       <p class="marcas-sub">Distribución autorizada con alcance a toda la república. Productos certificados para profesionales del sector automotriz.</p>
     </div>
     <div class="marcas-pills">
-      <span class="marca-pill">Meguiar's</span>
-      <span class="marca-pill">Gtechniq</span>
+      <a class="marca-pill" href="https://www.meguiars.com/" target="_blank" rel="noopener">Meguiar's</a>
+      <a class="marca-pill" href="https://gtechniq.com/" target="_blank" rel="noopener">Gtechniq</a>
       <span class="marca-pill">Diamond Protect</span>
-      <span class="marca-pill">Nanoskin</span>
-      <span class="marca-pill">RUPES</span>
-      <span class="marca-pill">Malco</span>
+      <a class="marca-pill" href="https://www.nanoskinusa.com/" target="_blank" rel="noopener">Nanoskin</a>
+      <a class="marca-pill" href="https://www.rupes.com/" target="_blank" rel="noopener">RUPES</a>
+      <a class="marca-pill" href="https://malcoautomotive.com/" target="_blank" rel="noopener">Malco</a>
       <span class="marca-pill">Symplex</span>
-      <span class="marca-pill">Menzerna</span>
+      <a class="marca-pill" href="https://www.menzerna.com/" target="_blank" rel="noopener">Menzerna</a>
       <span class="marca-pill">Road FS</span>
-      <span class="marca-pill">Transtar</span>
-      <span class="marca-pill">Evercoat</span>
-      <span class="marca-pill">Trimaco</span>
-      <span class="marca-pill">SM Arnold</span>
-      <span class="marca-pill">Sonax</span>
-      <span class="marca-pill">Q2</span>
+      <a class="marca-pill" href="https://www.tat-co.com/" target="_blank" rel="noopener">Transtar</a>
+      <a class="marca-pill" href="https://www.evercoat.com/" target="_blank" rel="noopener">Evercoat</a>
+      <a class="marca-pill" href="https://trimaco.com/" target="_blank" rel="noopener">Trimaco</a>
+      <a class="marca-pill" href="https://smarnold.com/" target="_blank" rel="noopener">SM Arnold</a>
+      <a class="marca-pill" href="https://www.sonax.com/" target="_blank" rel="noopener">Sonax</a>
+      <a class="marca-pill" href="https://gyeon.co/" target="_blank" rel="noopener">Q2 / GYEON</a>
       <span class="marca-pill">PADX</span>
       <span class="marca-pill">MARFLO</span>
-      <span class="marca-pill">3M</span>
+      <a class="marca-pill" href="https://www.3m.com/" target="_blank" rel="noopener">3M</a>
     </div>
     <p class="marcas-note">Y muchas marcas más &nbsp;·&nbsp; Contáctanos para más información</p>
   </div>
@@ -376,22 +403,6 @@
         <div class="cndd-current-edition">IMPACTA · INNOVA · CONECTA</div>
         <div class="cndd-current-venue">Hotel Racquet Cuernavaca &nbsp;·&nbsp; 30, 31 Jul &amp; 1 Ago 2026</div>
       </div>
-      <div class="cndd-brands-wrap">
-        <div class="cndd-section-label">Marcas Participantes CNDD 2026</div>
-        <div class="brands-grid">
-          <span class="brand-pill">Marflo</span>
-          <span class="brand-pill">QDOS</span>
-          <span class="brand-pill">Menzerna</span>
-          <span class="brand-pill">IDA</span>
-          <span class="brand-pill">Wash Monkey</span>
-          <span class="brand-pill">Tonyin</span>
-          <span class="brand-pill">Meguiar's</span>
-          <span class="brand-pill">Liquid Elements</span>
-          <span class="brand-pill">Symplex</span>
-          <span class="brand-pill">RUPES</span>
-          <span class="brand-pill">Nanoskin</span>
-        </div>
-      </div>
     </div>
     <div>
       <div class="cndd-editions-title">Historial de Ediciones</div>
@@ -402,6 +413,7 @@
             <div class="ed-num">4ª Edición</div>
             <div class="ed-place">Hotel Racquet Cuernavaca, Morelos</div>
           </div>
+          <img src="IMG/cndd-2026.jpg" alt="CNDD 2026 — Gracias Detailers" class="ed-photo">
         </div>
         <div class="edition-tl-item">
           <div class="ed-year dim">2025</div>
@@ -409,6 +421,7 @@
             <div class="ed-num">3ª Edición</div>
             <div class="ed-place dim">Club Campestre Teotihuacan, Edo. Méx.</div>
           </div>
+          <img src="IMG/cndd-2025.jpg" alt="CNDD 2025 — Teotihuacan" class="ed-photo">
         </div>
         <div class="edition-tl-item">
           <div class="ed-year dim">2018</div>
@@ -416,6 +429,7 @@
             <div class="ed-num">2ª Edición</div>
             <div class="ed-place dim">Querétaro</div>
           </div>
+          <img src="IMG/cndd-2018.jpg" alt="CNDD 2018 — Querétaro" class="ed-photo">
         </div>
         <div class="edition-tl-item">
           <div class="ed-year dim">2017</div>
@@ -423,6 +437,7 @@
             <div class="ed-num">1ª Edición</div>
             <div class="ed-place dim">Pachuca, Hidalgo</div>
           </div>
+          <img src="IMG/cndd-2017.jpg" alt="CNDD 2017 — Pachuca" class="ed-photo">
         </div>
       </div>
     </div>
@@ -478,6 +493,14 @@
           <div class="bs-step-title">Trabajo &amp; Entrega</div>
           <div class="bs-step-desc">Comenzamos. Registramos cada etapa con foto y video. Al terminar coordinamos la entrega a tu ritmo y firmamos juntos la Hoja de Servicio.</div>
         </div>
+      </div>
+    </div>
+    <div class="bs-tesla">
+      <img src="IMG/tesla-equipo.jpg" alt="Equipo Smart System — capacitación Tesla" class="bs-tesla-img">
+      <div class="bs-tesla-content">
+        <div class="bs-tesla-tag">Vehículos Eléctricos</div>
+        <div class="bs-tesla-h3">Preparados para los autos del futuro</div>
+        <div class="bs-tesla-desc">Nuestro equipo está capacitado para la reparación estética de vehículos eléctricos, incluyendo Tesla. Cuando la industria evolucionó, nosotros ya estábamos listos — porque no esperamos el cambio, lo anticipamos.</div>
       </div>
     </div>
     <div class="bs-cta">
