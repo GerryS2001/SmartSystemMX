@@ -1,0 +1,1542 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Body Shop Studio — Reparación & Detallado Automotriz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --papel: #E8E4DD;
+      --rojo: #E63B2E;
+      --blanco: #F5F3EE;
+      --negro: #111111;
+      --font-title: 'Space Grotesk', sans-serif;
+      --font-drama: 'DM Serif Display', serif;
+      --font-data: 'Space Mono', monospace;
+      --r-lg: 2rem;
+      --r-xl: 3rem;
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+
+    body {
+      background: var(--papel);
+      color: var(--negro);
+      font-family: var(--font-title);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NOISE OVERLAY */
+    #noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.045;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* HEADER */
+    .hdr {
+      position: fixed;
+      top: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 3rem);
+      max-width: 1200px;
+      z-index: 1000;
+    }
+    .hdr-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1.5rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(17,17,17,0.15);
+      background: transparent;
+      transition: background .4s ease, backdrop-filter .4s ease, border-color .4s ease;
+    }
+    .hdr-inner.on {
+      background: rgba(17,17,17,0.9);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-color: rgba(255,255,255,0.07);
+    }
+    .hdr-logo {
+      font-family: var(--font-title);
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--negro);
+      transition: color .4s;
+    }
+    .hdr-inner.on .hdr-logo { color: var(--blanco); }
+    .hdr-nav { display: flex; gap: 2rem; align-items: center; }
+    .hdr-nav a {
+      font-family: var(--font-data);
+      font-size: 0.65rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--negro);
+      text-decoration: none;
+      opacity: .55;
+      transition: opacity .3s, color .4s;
+    }
+    .hdr-inner.on .hdr-nav a { color: var(--blanco); }
+    .hdr-nav a:hover { opacity: 1; }
+    .btn-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .55rem 1.3rem;
+      border-radius: 9999px;
+      font-family: var(--font-data);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      background: var(--rojo);
+      color: var(--blanco);
+      border: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform .2s;
+    }
+    .btn-pill:hover { transform: scale(1.03); }
+    .btn-pill .bg-slide {
+      position: absolute; inset: 0;
+      background: #c32c20;
+      transform: translateY(101%);
+      transition: transform .35s cubic-bezier(.76,0,.24,1);
+      border-radius: inherit;
+    }
+    .btn-pill:hover .bg-slide { transform: translateY(0); }
+    .btn-pill > span { position: relative; z-index: 1; }
+
+    /* HERO */
+    .hero {
+      height: 100dvh;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding: 4rem;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+      will-change: transform;
+    }
+    .hero-ov {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(17,17,17,.97) 0%, rgba(17,17,17,.6) 40%, rgba(17,17,17,.1) 75%, transparent 100%);
+    }
+    .hero-body {
+      position: relative; z-index: 2;
+      max-width: 1200px; width: 100%;
+      margin: 0 auto;
+    }
+    .eyebrow {
+      font-family: var(--font-data);
+      font-size: .65rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--rojo);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .eyebrow::before { content: ''; display: block; width: 2rem; height: 1px; background: var(--rojo); }
+    .hero-h1 {
+      font-family: var(--font-title);
+      font-weight: 700;
+      font-size: clamp(3.5rem, 9vw, 9rem);
+      line-height: .92;
+      letter-spacing: -.03em;
+      color: var(--blanco);
+      text-transform: uppercase;
+    }
+    .hero-h1 em {
+      font-family: var(--font-drama);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(4rem, 10.5vw, 11rem);
+      color: var(--rojo);
+      display: block;
+      letter-spacing: -.02em;
+    }
+    .hero-foot {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-top: 3rem;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .hero-addr {
+      font-family: var(--font-data);
+      font-size: .6rem;
+      letter-spacing: .1em;
+      color: rgba(245,243,238,.45);
+      line-height: 1.9;
+    }
+    .hero-cta { display: flex; align-items: center; gap: 1.5rem; }
+    .btn-hero {
+      display: inline-flex;
+      align-items: center;
+      gap: .75rem;
+      padding: 1.1rem 2.5rem;
+      background: var(--rojo);
+      color: var(--blanco);
+      font-family: var(--font-title);
+      font-weight: 600;
+      font-size: .9rem;
+      border-radius: 9999px;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform .2s;
+    }
+    .btn-hero:hover { transform: scale(1.03); }
+    .btn-hero .bg-slide { position: absolute; inset: 0; background: #c32c20; transform: translateY(101%); transition: transform .35s cubic-bezier(.76,0,.24,1); border-radius: inherit; }
+    .btn-hero:hover .bg-slide { transform: translateY(0); }
+    .btn-hero > span, .btn-hero > svg { position: relative; z-index: 1; }
+    .scroll-hint {
+      font-family: var(--font-data);
+      font-size: .55rem;
+      color: rgba(245,243,238,.3);
+      letter-spacing: .25em;
+      writing-mode: vertical-rl;
+    }
+
+    /* TRUST BAR */
+    .trust {
+      background: var(--negro);
+      padding: 1.5rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .t-stat { display: flex; align-items: baseline; gap: .5rem; }
+    .t-num {
+      font-family: var(--font-drama);
+      font-style: italic;
+      font-size: 2.5rem;
+      color: var(--rojo);
+      line-height: 1;
+    }
+    .t-lbl {
+      font-family: var(--font-data);
+      font-size: .6rem;
+      color: rgba(245,243,238,.45);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      line-height: 1.5;
+    }
+    .t-div { width: 1px; height: 3rem; background: rgba(255,255,255,.08); flex-shrink: 0; }
+    .t-badge {
+      font-family: var(--font-data);
+      font-size: .58rem;
+      color: rgba(245,243,238,.35);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      text-align: right;
+      line-height: 1.9;
+    }
+    .t-badge strong { color: rgba(245,243,238,.8); font-weight: 700; }
+
+    /* SECTION TAG */
+    .stag {
+      font-family: var(--font-data);
+      font-size: .6rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--rojo);
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      margin-bottom: 1rem;
+    }
+    .stag::before { content: ''; display: block; width: 1.5rem; height: 1px; background: var(--rojo); }
+    .stag.lt { color: rgba(245,243,238,.4); }
+    .stag.lt::before { background: rgba(245,243,238,.4); }
+
+    /* FEATURES */
+    .features { padding: 8rem 2rem; background: var(--papel); }
+    .features-hdr {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 4rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      gap: 2rem;
+    }
+    .feat-h2 {
+      font-family: var(--font-title);
+      font-weight: 700;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 1;
+      letter-spacing: -.03em;
+      color: var(--negro);
+    }
+    .feat-h2 em { font-family: var(--font-drama); font-style: italic; color: var(--rojo); font-weight: 400; }
+    .feat-sub {
+      font-family: var(--font-data);
+      font-size: .68rem;
+      color: #888;
+      max-width: 260px;
+      line-height: 1.9;
+      letter-spacing: .03em;
+    }
+    .feat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .fcard {
+      background: var(--negro);
+      border-radius: var(--r-lg);
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      min-height: 500px;
+      overflow: hidden;
+      position: relative;
+    }
+    .fcard-tag {
+      font-family: var(--font-data);
+      font-size: .58rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--rojo);
+    }
+    .fcard-tag::before { content: '// '; opacity: .5; }
+    .fcard-h3 {
+      font-family: var(--font-title);
+      font-weight: 700;
+      font-size: 1.45rem;
+      line-height: 1.1;
+      color: var(--blanco);
+      letter-spacing: -.02em;
+    }
+    .fcard-desc {
+      font-family: var(--font-data);
+      font-size: .65rem;
+      color: rgba(245,243,238,.4);
+      line-height: 1.9;
+      letter-spacing: .02em;
+    }
+
+    /* SHUFFLER */
+    .shuffler { flex: 1; position: relative; min-height: 180px; padding-bottom: 26px; }
+    .sh-card {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      background: #222222;
+      border: 1px solid rgba(245,243,238,.14);
+      border-radius: 1.25rem;
+      padding: 1.5rem;
+      cursor: pointer;
+    }
+    .sh-card:nth-child(1) { transform: rotate(-2deg); z-index: 3; background: #2a2a2a; }
+    .sh-card:nth-child(2) { transform: rotate(1.5deg) translateY(12px) scale(.97); z-index: 2; }
+    .sh-card:nth-child(3) { transform: rotate(-.5deg) translateY(22px) scale(.94); z-index: 1; background: #1a1a1a; }
+    .sh-svc {
+      font-family: var(--font-title);
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--blanco);
+      margin-bottom: .4rem;
+    }
+    .sh-detail {
+      font-family: var(--font-data);
+      font-size: .55rem;
+      color: rgba(245,243,238,.4);
+      letter-spacing: .1em;
+    }
+    .sh-badge {
+      display: inline-block;
+      margin-top: .75rem;
+      padding: .2rem .75rem;
+      background: var(--rojo);
+      border-radius: 9999px;
+      font-family: var(--font-data);
+      font-size: .5rem;
+      color: var(--blanco);
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    /* TYPEWRITER */
+    .tw-box {
+      flex: 1;
+      background: rgba(245,243,238,.04);
+      border: 1px solid rgba(245,243,238,.08);
+      border-radius: 1.25rem;
+      padding: 1.5rem;
+      font-family: var(--font-data);
+      font-size: .65rem;
+      line-height: 2;
+      letter-spacing: .03em;
+      min-height: 200px;
+    }
+    .tw-line { display: block; color: rgba(245,243,238,.55); }
+    .tw-line.cmd { color: var(--rojo); }
+    .tw-line.ok { color: #6ee7b7; }
+    #tw-cursor {
+      display: inline-block;
+      width: 7px; height: 1em;
+      background: var(--rojo);
+      margin-left: 2px;
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* SCHEDULER */
+    .sched { flex: 1; display: flex; flex-direction: column; gap: .65rem; }
+    .sched-row {
+      display: flex;
+      align-items: center;
+      gap: .875rem;
+      padding: .85rem 1.1rem;
+      background: rgba(245,243,238,.04);
+      border: 1px solid rgba(245,243,238,.07);
+      border-radius: .875rem;
+      transition: background .35s, border-color .35s;
+    }
+    .sched-row.done { opacity: .6; }
+    .sched-row.active {
+      background: rgba(230,59,46,.1);
+      border-color: rgba(230,59,46,.28);
+    }
+    .sched-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: rgba(245,243,238,.18);
+      flex-shrink: 0;
+      transition: background .35s, box-shadow .35s;
+    }
+    .sched-row.done .sched-dot { background: #6ee7b7; }
+    .sched-row.active .sched-dot { background: var(--rojo); box-shadow: 0 0 8px rgba(230,59,46,.6); }
+    .sched-lbl {
+      flex: 1;
+      font-family: var(--font-data);
+      font-size: .58rem;
+      color: rgba(245,243,238,.45);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      transition: color .35s;
+    }
+    .sched-row.active .sched-lbl { color: rgba(245,243,238,.9); }
+    .sched-day {
+      font-family: var(--font-data);
+      font-size: .52rem;
+      color: rgba(245,243,238,.25);
+      letter-spacing: .08em;
+    }
+    .sched-check { font-size: .75rem; color: #6ee7b7; }
+
+    /* PHILOSOPHY */
+    .philo {
+      background: var(--negro);
+      padding: 9rem 2rem;
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--r-xl) var(--r-xl) 0 0;
+    }
+    .philo-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1920&q=80') center/cover;
+      opacity: .07;
+      will-change: transform;
+    }
+    .philo-inner {
+      position: relative; z-index: 2;
+      max-width: 1200px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .philo-h2 {
+      font-family: var(--font-title);
+      font-weight: 700;
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      line-height: 1.05;
+      letter-spacing: -.03em;
+      color: var(--blanco);
+      margin-bottom: 2rem;
+    }
+    .philo-h2 em { font-family: var(--font-drama); font-style: italic; color: var(--rojo); }
+    .philo-p {
+      font-family: var(--font-data);
+      font-size: .7rem;
+      color: rgba(245,243,238,.45);
+      line-height: 2.1;
+      letter-spacing: .03em;
+      margin-bottom: 2.5rem;
+    }
+    .smart-badge {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1.4rem 1.75rem;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--r-lg);
+    }
+    .sb-ico {
+      width: 3rem; height: 3rem;
+      border-radius: .75rem;
+      background: rgba(230,59,46,.12);
+      border: 1px solid rgba(230,59,46,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-title);
+      font-weight: 700;
+      font-size: .85rem;
+      color: var(--rojo);
+      flex-shrink: 0;
+    }
+    .sb-txt {
+      font-family: var(--font-data);
+      font-size: .6rem;
+      color: rgba(245,243,238,.35);
+      line-height: 1.9;
+      letter-spacing: .05em;
+    }
+    .sb-txt strong { display: block; color: rgba(245,243,238,.75); font-size: .65rem; margin-bottom: .2rem; }
+    .philo-right { display: flex; flex-direction: column; gap: 1.25rem; }
+    .contrast {
+      padding: 1.75rem;
+      border-radius: var(--r-lg);
+      border: 1px solid rgba(255,255,255,.07);
+    }
+    .contrast.ind {
+      background: rgba(255,255,255,.03);
+      opacity: .55;
+    }
+    .contrast.brand {
+      background: rgba(230,59,46,.08);
+      border-color: rgba(230,59,46,.22);
+    }
+    .c-label {
+      font-family: var(--font-data);
+      font-size: .52rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      margin-bottom: .65rem;
+    }
+    .contrast.ind .c-label { color: rgba(245,243,238,.28); }
+    .contrast.brand .c-label { color: var(--rojo); }
+    .c-text {
+      font-family: var(--font-title);
+      font-weight: 600;
+      font-size: 1.05rem;
+      line-height: 1.35;
+    }
+    .contrast.ind .c-text { color: rgba(245,243,238,.35); text-decoration: line-through; }
+    .contrast.brand .c-text { color: var(--blanco); }
+
+    /* CNDD BLOCK */
+    .cndd-block { display: flex; flex-direction: column; gap: 1.25rem; }
+    .cndd-header {
+      padding: 1.75rem;
+      background: rgba(230,59,46,.06);
+      border: 1px solid rgba(230,59,46,.22);
+      border-radius: var(--r-lg);
+      text-align: center;
+    }
+    .cndd-logo-text {
+      font-family: var(--font-title);
+      font-size: 2.8rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      color: var(--blanco);
+      line-height: 1;
+      margin-bottom: .25rem;
+    }
+    .cndd-logo-text span { color: var(--rojo); }
+    .cndd-full-name {
+      font-family: var(--font-data);
+      font-size: .52rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(245,243,238,.5);
+      margin-bottom: .75rem;
+    }
+    .cndd-edition {
+      font-family: var(--font-data);
+      font-size: .52rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--rojo);
+      margin-bottom: .3rem;
+    }
+    .cndd-tagline {
+      font-family: var(--font-title);
+      font-weight: 700;
+      font-size: .9rem;
+      color: var(--blanco);
+      letter-spacing: .15em;
+      margin-bottom: .4rem;
+    }
+    .cndd-venue {
+      font-family: var(--font-data);
+      font-size: .53rem;
+      letter-spacing: .06em;
+      color: rgba(245,243,238,.4);
+    }
+    .cndd-brands-section,
+    .cndd-topics,
+    .cndd-editions {
+      padding: 1.2rem 1.5rem;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: var(--r-lg);
+    }
+    .cndd-section-label {
+      font-family: var(--font-data);
+      font-size: .48rem;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--rojo);
+      margin-bottom: .85rem;
+    }
+    .brands-grid { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .brand-pill {
+      font-family: var(--font-data);
+      font-size: .54rem;
+      letter-spacing: .07em;
+      padding: .28rem .7rem;
+      border-radius: 99px;
+      background: rgba(230,59,46,.1);
+      border: 1px solid rgba(230,59,46,.22);
+      color: rgba(245,243,238,.72);
+    }
+    .topic-item {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      font-family: var(--font-title);
+      font-size: .85rem;
+      color: rgba(245,243,238,.65);
+      padding: .4rem 0;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+    }
+    .topic-item:last-child { border-bottom: none; }
+    .topic-dot {
+      width: .38rem; height: .38rem;
+      border-radius: 50%;
+      background: var(--rojo);
+      flex-shrink: 0;
+    }
+    .edition-item { display: flex; align-items: center; gap: 1rem; }
+    .edition-year {
+      font-family: var(--font-data);
+      font-size: .72rem;
+      font-weight: 700;
+      color: var(--rojo);
+      letter-spacing: .05em;
+    }
+    .edition-venue {
+      font-family: var(--font-title);
+      font-size: .85rem;
+      color: rgba(245,243,238,.55);
+    }
+    .sb-logo {
+      height: 2.8rem;
+      width: auto;
+      object-fit: contain;
+      flex-shrink: 0;
+      border-radius: .5rem;
+      background: #fff;
+      padding: .25rem .4rem;
+    }
+
+    /* TIMELINE PROCESO */
+    .timeline-sec { background: var(--negro); padding: 0 2rem 8rem; }
+    .timeline-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .timeline-wrap::before {
+      content: '';
+      position: absolute;
+      left: 5rem;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(230,59,46,.3) 5%, rgba(230,59,46,.3) 95%, transparent);
+    }
+    .tl-item {
+      display: grid;
+      grid-template-columns: 10rem 1fr;
+      gap: 3rem;
+      padding: 3.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      align-items: start;
+      position: relative;
+    }
+    .tl-item:last-child { border-bottom: none; }
+    .tl-num {
+      font-family: var(--font-drama);
+      font-style: italic;
+      font-size: 4.5rem;
+      line-height: 1;
+      color: rgba(230,59,46,.2);
+      text-align: right;
+      padding-right: 3rem;
+      position: relative;
+      transition: color .4s;
+    }
+    .tl-item:hover .tl-num { color: var(--rojo); }
+    .tl-num::after {
+      content: '';
+      position: absolute;
+      right: -5px; top: .55em;
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--negro);
+      border: 2px solid rgba(230,59,46,.35);
+      transition: background .4s, border-color .4s;
+    }
+    .tl-item:hover .tl-num::after { background: var(--rojo); border-color: var(--rojo); }
+    .tl-content { padding-top: .4rem; }
+    .tl-title {
+      font-family: var(--font-title);
+      font-weight: 700;
+      font-size: clamp(1.6rem, 3vw, 2.25rem);
+      line-height: 1.1;
+      color: var(--blanco);
+      letter-spacing: -.03em;
+      margin-bottom: .875rem;
+    }
+    .tl-title em { font-family: var(--font-drama); font-style: italic; color: var(--rojo); font-weight: 400; }
+    .tl-desc {
+      font-family: var(--font-data);
+      font-size: .68rem;
+      color: rgba(245,243,238,.45);
+      line-height: 2;
+      letter-spacing: .03em;
+      margin-bottom: 1.25rem;
+      max-width: 580px;
+    }
+    .tl-tags { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .tl-tag {
+      display: inline-block;
+      padding: .28rem .85rem;
+      border: 1px solid rgba(245,243,238,.12);
+      border-radius: 9999px;
+      font-family: var(--font-data);
+      font-size: .55rem;
+      color: rgba(245,243,238,.4);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transition: border-color .3s, color .3s;
+    }
+    .tl-item:hover .tl-tag { border-color: rgba(230,59,46,.3); color: rgba(245,243,238,.65); }
+
+    /* PROTOCOL HEADER (above cards) */
+    .proto-hdr {
+      background: var(--negro);
+      padding: 7rem 2rem 4rem;
+      text-align: center;
+    }
+    .proto-hdr .stag { justify-content: center; margin-bottom: 1.5rem; }
+    .proto-h2 {
+      font-family: var(--font-title);
+      font-weight: 700;
+      font-size: clamp(3rem, 6vw, 6rem);
+      line-height: .95;
+      letter-spacing: -.04em;
+      color: var(--blanco);
+    }
+    .proto-h2 em { font-family: var(--font-drama); font-style: italic; color: var(--rojo); }
+
+    /* CTA */
+    .cta-sec {
+      background: var(--rojo);
+      padding: 7rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 4rem;
+    }
+    .cta-h2 {
+      font-family: var(--font-title);
+      font-weight: 700;
+      font-size: clamp(2.5rem, 6vw, 6rem);
+      color: var(--blanco);
+      letter-spacing: -.04em;
+      line-height: .95;
+    }
+    .cta-h2 em { font-family: var(--font-drama); font-style: italic; display: block; font-weight: 400; }
+    .cta-sub {
+      margin-top: 1.5rem;
+      font-family: var(--font-data);
+      font-size: .68rem;
+      color: rgba(245,243,238,.6);
+      letter-spacing: .05em;
+      line-height: 1.8;
+    }
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: .875rem;
+      padding: 1.3rem 2.75rem;
+      background: var(--negro);
+      color: var(--blanco);
+      font-family: var(--font-title);
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 9999px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform .2s, background .3s;
+      border: none; cursor: pointer;
+      position: relative; overflow: hidden;
+    }
+    .btn-wa:hover { transform: scale(1.03); background: #1e1e1e; }
+    .cta-actions { display: flex; flex-direction: column; gap: .85rem; align-items: flex-start; }
+    .btn-map {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      font-family: var(--font-data);
+      font-size: .58rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(245,243,238,.65);
+      text-decoration: none;
+      padding: .6rem 1.1rem;
+      border: 1px solid rgba(245,243,238,.2);
+      border-radius: 99px;
+      transition: background .25s, color .25s, border-color .25s;
+    }
+    .btn-map:hover { background: rgba(245,243,238,.08); color: var(--blanco); border-color: rgba(245,243,238,.4); }
+    .ft-map-link {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      margin-top: .85rem;
+      font-family: var(--font-data);
+      font-size: .54rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--rojo);
+      text-decoration: none;
+      opacity: .85;
+      transition: opacity .2s;
+    }
+    .ft-map-link:hover { opacity: 1; text-decoration: underline; }
+    .btn-wa svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .btn-wa .bg-slide { position: absolute; inset: 0; background: #1e1e1e; transform: translateY(101%); transition: transform .35s cubic-bezier(.76,0,.24,1); border-radius: inherit; }
+    .btn-wa:hover .bg-slide { transform: translateY(0); }
+    .btn-wa > span, .btn-wa > svg { position: relative; z-index: 1; }
+
+    /* FOOTER */
+    .footer {
+      background: var(--negro);
+      border-radius: var(--r-xl) var(--r-xl) 0 0;
+      padding: 5rem 2rem 3rem;
+    }
+    .footer-inner { max-width: 1200px; margin: 0 auto; }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      margin-bottom: 2.5rem;
+    }
+    .ft-brand {
+      font-family: var(--font-title);
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--blanco);
+      letter-spacing: -.02em;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .ft-tagline {
+      font-family: var(--font-drama);
+      font-style: italic;
+      font-size: 1rem;
+      color: rgba(245,243,238,.35);
+      line-height: 1.6;
+    }
+    .ft-col-h {
+      font-family: var(--font-data);
+      font-size: .52rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: rgba(245,243,238,.25);
+      margin-bottom: 1.25rem;
+    }
+    .ft-addr {
+      font-family: var(--font-data);
+      font-size: .62rem;
+      color: rgba(245,243,238,.45);
+      line-height: 2.1;
+      letter-spacing: .04em;
+    }
+    .footer-bot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .ft-copy {
+      font-family: var(--font-data);
+      font-size: .55rem;
+      color: rgba(245,243,238,.2);
+      letter-spacing: .12em;
+    }
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      padding: .5rem 1.1rem;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 9999px;
+    }
+    .s-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #6ee7b7;
+      animation: pulse-g 2s ease infinite;
+    }
+    @keyframes pulse-g {
+      0%   { box-shadow: 0 0 0 0 rgba(110,231,183,.4); }
+      70%  { box-shadow: 0 0 0 8px rgba(110,231,183,0); }
+      100% { box-shadow: 0 0 0 0 rgba(110,231,183,0); }
+    }
+    .s-txt {
+      font-family: var(--font-data);
+      font-size: .52rem;
+      color: rgba(245,243,238,.35);
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hdr-nav { display: none; }
+      .hero { padding: 2rem; }
+      .feat-grid { grid-template-columns: 1fr; }
+      .features-hdr { flex-direction: column; }
+      .philo-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .timeline-wrap::before { left: 3rem; }
+      .tl-item { grid-template-columns: 5.5rem 1fr; gap: 1.25rem; }
+      .tl-num { font-size: 3rem; padding-right: 1.75rem; }
+      .cta-inner { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+      .trust { padding: 1.5rem 2rem; }
+      .t-div { display: none; }
+      .hero-foot { flex-direction: column; align-items: flex-start; }
+      .proto-hdr { padding: 5rem 2rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NOISE -->
+<div id="noise" aria-hidden="true"></div>
+
+<!-- HEADER -->
+<header class="hdr" id="hdr">
+  <div class="hdr-inner" id="hdr-inner">
+    <div class="hdr-logo">The Body Shop Studio</div>
+    <nav class="hdr-nav">
+      <a href="#servicios">Servicios</a>
+      <a href="#filosofia">Filosofía</a>
+      <a href="#proceso">Proceso</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-ov"></div>
+  <div class="hero-body">
+    <div class="eyebrow" id="h-eye">Reparación &nbsp;·&nbsp; Repintado &nbsp;·&nbsp; Detallado</div>
+    <h1 class="hero-h1" id="h-title">
+      The Body
+      <em>Shop Studio</em>
+    </h1>
+    <div class="hero-foot" id="h-foot">
+      <div class="hero-addr">
+        AV. ING. ALFREDO ROBLES DOMINGUEZ 100<br>
+        VALLEJO · GUSTAVO A. MADERO · CDMX · 07870<br>
+        +10 AÑOS EN LA INDUSTRIA AUTOMOTRIZ
+      </div>
+      <div class="hero-cta">
+        <a href="https://wa.me/525611678378?text=Hola,%20quiero%20un%20diagn%C3%B3stico" class="btn-hero" target="_blank" rel="noopener" id="btn-main">
+          <div class="bg-slide"></div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          <span>Solicitar Diagnóstico</span>
+        </a>
+        <a href="https://maps.app.goo.gl/MLTZ8irXsVxH7pXy9?g_st=ac" class="btn-map" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          Cómo llegar
+        </a>
+        <div class="scroll-hint" aria-hidden="true">SCROLL</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust" id="trust-bar">
+  <div class="t-stat">
+    <span class="t-num">10+</span>
+    <span class="t-lbl">Años en<br>la industria</span>
+  </div>
+  <div class="t-div"></div>
+  <div class="t-stat">
+    <span class="t-num">50+</span>
+    <span class="t-lbl">Años de<br>respaldo</span>
+  </div>
+  <div class="t-div"></div>
+  <div class="t-stat">
+    <span class="t-num">100%</span>
+    <span class="t-lbl">Productos<br>certificados</span>
+  </div>
+  <div class="t-div"></div>
+  <div class="t-badge">
+    DISTRIBUIDOR AUTORIZADO<br>
+    <strong>SMART SYSTEM DE MÉXICO</strong><br>
+    MÁS DE 50 AÑOS EN LA INDUSTRIA
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="features" id="servicios">
+  <div class="features-hdr">
+    <div>
+      <div class="stag">Propuesta de Valor</div>
+      <h2 class="feat-h2">Más allá del<br><em>estándar</em></h2>
+    </div>
+    <p class="feat-sub">Cada vehículo recibe la misma atención. Sin atajos, sin compromisos, sin medias tintas.</p>
+  </div>
+  <div class="feat-grid">
+
+    <!-- CARD 1: SHUFFLER -->
+    <div class="fcard" id="fcard-1">
+      <div class="fcard-tag">Detalle Total</div>
+      <div>
+        <div class="fcard-h3">Como nuevo,<br>hasta el más<br>mínimo detalle</div>
+        <div class="fcard-desc" style="margin-top:.75rem">Cada centímetro, cada grieta, cada superficie — tratada con la misma exigencia.</div>
+      </div>
+      <div class="shuffler" id="shuffler">
+        <div class="sh-card">
+          <div class="sh-svc">Repintado Completo</div>
+          <div class="sh-detail">PINTURA ALTA SOLIDEZ · CABINA CERTIFICADA</div>
+          <div class="sh-badge">Acabado Premium</div>
+        </div>
+        <div class="sh-card">
+          <div class="sh-svc">Reparación Estructural</div>
+          <div class="sh-detail">CARROCERÍA · HOJALATERÍA · ENDEREZADO</div>
+          <div class="sh-badge">Precisión Total</div>
+        </div>
+        <div class="sh-card">
+          <div class="sh-svc">Detallado Profesional</div>
+          <div class="sh-detail">PULIDO · CERAMIZADO · PROTECCIÓN UV</div>
+          <div class="sh-badge">Brillo Permanente</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 2: TYPEWRITER -->
+    <div class="fcard">
+      <div class="fcard-tag">Metodología</div>
+      <div>
+        <div class="fcard-h3">Calidad<br>antes que<br>velocidad</div>
+        <div class="fcard-desc" style="margin-top:.75rem">El tiempo correcto para el trabajo correcto. Sin correr, sin comprometer el resultado.</div>
+      </div>
+      <div class="tw-box">
+        <span class="tw-line cmd">$ diagnóstico_inicial</span>
+        <span class="tw-line" id="tl1"></span>
+        <span class="tw-line cmd" id="tl2"></span>
+        <span class="tw-line ok" id="tl3"></span>
+        <span class="tw-line" id="tl4"></span>
+        <span id="tw-cursor"></span>
+      </div>
+    </div>
+
+    <!-- CARD 3: SCHEDULER -->
+    <div class="fcard">
+      <div class="fcard-tag">Post-Servicio</div>
+      <div>
+        <div class="fcard-h3">Seguimiento<br>para que tu<br>auto brille siempre</div>
+        <div class="fcard-desc" style="margin-top:.75rem">El trabajo no termina en la entrega. Te acompañamos para que el resultado dure.</div>
+      </div>
+      <div class="sched" id="sched">
+        <div class="sched-row done">
+          <div class="sched-dot"></div>
+          <div class="sched-lbl">Entrega del vehículo</div>
+          <div class="sched-check">✓</div>
+          <div class="sched-day">Día 0</div>
+        </div>
+        <div class="sched-row done">
+          <div class="sched-dot"></div>
+          <div class="sched-lbl">Revisión de acabados</div>
+          <div class="sched-check">✓</div>
+          <div class="sched-day">Día 7</div>
+        </div>
+        <div class="sched-row active">
+          <div class="sched-dot"></div>
+          <div class="sched-lbl">Verificación de pintura</div>
+          <div class="sched-day">Día 30</div>
+        </div>
+        <div class="sched-row">
+          <div class="sched-dot"></div>
+          <div class="sched-lbl">Seguimiento semestral</div>
+          <div class="sched-day">Día 180</div>
+        </div>
+        <div class="sched-row">
+          <div class="sched-dot"></div>
+          <div class="sched-lbl">Mantenimiento anual</div>
+          <div class="sched-day">Día 365</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philo" id="filosofia">
+  <div class="philo-bg" id="philo-bg"></div>
+  <div class="philo-inner">
+    <div id="ph-left">
+      <div class="stag lt">Nuestra Filosofía</div>
+      <h2 class="philo-h2">
+        No inventamos<br>el estándar.<br>
+        <em>Lo heredamos.</em>
+      </h2>
+      <p class="philo-p">
+        Body Shop Studio nació con una sola idea: un taller donde la calidad manda sobre la cantidad, sin perder de vista el menor tiempo posible. Pero ese nivel de exigencia no salió de la nada — nos respalda Smart System de México, la empresa detrás de los eventos que marcan el rumbo de la industria automotriz del país: organizadores del Congreso Nacional de Detalladores (CNDD) y presentes en foros como Cesvi México y el Salón de la Elegancia. Más de 50 años reuniendo a las mejores marcas, los mejores exponentes y los estándares más altos. Todo ese conocimiento no se queda en un congreso: entra directo a tu auto.
+      </p>
+      <div class="smart-badge">
+        <img class="sb-logo" src="IMG/smart-system-logo.jpg" alt="Smart System México">
+        <div class="sb-txt">
+          <strong>Smart System de México</strong>
+          CESVI MÉXICO · CNDD · SALÓN DE LA ELEGANCIA · +50 AÑOS EN LA INDUSTRIA
+        </div>
+      </div>
+    </div>
+    <div id="ph-right">
+      <div class="cndd-block">
+        <div class="cndd-header">
+          <div class="cndd-logo-text">CNDD <span>2026</span></div>
+          <div class="cndd-full-name">Congreso Nacional de Detalladores</div>
+          <div class="cndd-edition">4ª Edición</div>
+          <div class="cndd-tagline">IMPACTA · INNOVA · CONECTA</div>
+          <div class="cndd-venue">Hotel Racquet Cuernavaca &nbsp;·&nbsp; 30, 31 Jul &amp; 1 Ago 2026</div>
+        </div>
+        <div class="cndd-brands-section">
+          <div class="cndd-section-label">Marcas Participantes</div>
+          <div class="brands-grid">
+            <span class="brand-pill">Marflo</span>
+            <span class="brand-pill">QDOS</span>
+            <span class="brand-pill">Menzerna</span>
+            <span class="brand-pill">IDA</span>
+            <span class="brand-pill">Wash Monkey</span>
+            <span class="brand-pill">Tonyin</span>
+            <span class="brand-pill">Meguiar's</span>
+            <span class="brand-pill">Liquid Elements</span>
+            <span class="brand-pill">Symplex</span>
+            <span class="brand-pill">RUPES</span>
+            <span class="brand-pill">Nanoskin</span>
+          </div>
+        </div>
+        <div class="cndd-topics">
+          <div class="cndd-section-label">Temas del Congreso</div>
+          <div class="topic-item"><span class="topic-dot"></span>Trabajo en equipo y liderazgo</div>
+          <div class="topic-item"><span class="topic-dot"></span>Finanzas para emprendedores</div>
+          <div class="topic-item"><span class="topic-dot"></span>Certificación IDA — International Detailing Association</div>
+          <div class="topic-item"><span class="topic-dot"></span>Estaciones de Alto Rendimiento</div>
+        </div>
+        <div class="cndd-editions">
+          <div class="cndd-section-label">Ediciones Anteriores</div>
+          <div class="edition-item">
+            <span class="edition-year">2025</span>
+            <span class="edition-venue">Club Campestre Teotihuacan, Estado de México</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROTOCOL: STACKING CARDS -->
+<div class="proto-hdr" id="proceso">
+  <div class="stag lt" style="justify-content:center">Protocolo de Trabajo</div>
+  <h2 class="proto-h2">El proceso<br><em>sin secretos</em></h2>
+</div>
+
+<section class="timeline-sec">
+  <div class="timeline-wrap">
+
+    <div class="tl-item">
+      <div class="tl-num">01</div>
+      <div class="tl-content">
+        <div class="tl-title">Estimación <em>Remota</em></div>
+        <p class="tl-desc">Comparte fotos o videos de tu unidad por WhatsApp. Te damos un diagnóstico inicial y un rango de costo aproximado — sin necesidad de trasladarte todavía.</p>
+        <div class="tl-tags">
+          <span class="tl-tag">Fotos & Videos</span>
+          <span class="tl-tag">Sin Compromiso</span>
+          <span class="tl-tag">Respuesta Rápida</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-num">02</div>
+      <div class="tl-content">
+        <div class="tl-title">Visita al <em>Taller</em></div>
+        <p class="tl-desc">Llevas tu unidad a Body Shop Studio. Inspeccionamos cada centímetro en persona — carrocería, pintura y acabados — para darte una cotización exacta sin sorpresas.</p>
+        <div class="tl-tags">
+          <span class="tl-tag">Inspección Física</span>
+          <span class="tl-tag">Cotización Exacta</span>
+          <span class="tl-tag">Sin Cargos Ocultos</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-num">03</div>
+      <div class="tl-content">
+        <div class="tl-title">Hoja de <em>Servicio</em></div>
+        <p class="tl-desc">Documentamos todo: datos completos de la unidad, daños identificados y trabajos a realizar. Transparencia total — este documento es el contrato entre nosotros y tú.</p>
+        <div class="tl-tags">
+          <span class="tl-tag">Documentado</span>
+          <span class="tl-tag">Transparencia</span>
+          <span class="tl-tag">Sin Letra Chica</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-num">04</div>
+      <div class="tl-content">
+        <div class="tl-title">Inicio del <em>Trabajo</em></div>
+        <p class="tl-desc">Comenzamos. Dependiendo del trabajo solicitado se establece una fecha aproximada de entrega — aproximada porque la calidad no se apresura ni se compromete.</p>
+        <div class="tl-tags">
+          <span class="tl-tag">Fecha Estimada</span>
+          <span class="tl-tag">Calidad Primero</span>
+          <span class="tl-tag">Sin Atajos</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-num">05</div>
+      <div class="tl-content">
+        <div class="tl-title">Seguimiento <em>Visual</em></div>
+        <p class="tl-desc">Registramos cada etapa con fotografías y videos del avance. Si quieres saber qué se le está haciendo a tu auto, la información siempre está disponible para ti.</p>
+        <div class="tl-tags">
+          <span class="tl-tag">Fotografías</span>
+          <span class="tl-tag">Videos</span>
+          <span class="tl-tag">Tranquilidad Total</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-num">06</div>
+      <div class="tl-content">
+        <div class="tl-title">Cita de <em>Entrega</em></div>
+        <p class="tl-desc">Al concluir el trabajo te contactamos para agendar juntos el momento que te sea más conveniente. A tu ritmo, en tu horario — sin filas ni esperas.</p>
+        <div class="tl-tags">
+          <span class="tl-tag">A tu Ritmo</span>
+          <span class="tl-tag">Sin Filas</span>
+          <span class="tl-tag">Coordinación Directa</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-num">07</div>
+      <div class="tl-content">
+        <div class="tl-title">Firma & <em>Satisfacción</em></div>
+        <p class="tl-desc">Revisamos la unidad juntos. Tanto el encargado como tú firman la Hoja de Servicio con la fecha de entrega. No cerramos el trabajo hasta que estés completamente satisfecho.</p>
+        <div class="tl-tags">
+          <span class="tl-tag">Firma Mutua</span>
+          <span class="tl-tag">Garantía</span>
+          <span class="tl-tag">Satisfacción 100%</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- CTA -->
+<section class="cta-sec">
+  <div class="cta-inner">
+    <div>
+      <div class="stag" style="color:rgba(245,243,238,.55); margin-bottom:1.5rem">
+        <span style="background:rgba(245,243,238,.55);display:inline-block;width:1.5rem;height:1px;margin-right:.75rem"></span>
+        ¿Listo para el cambio?
+      </div>
+      <h2 class="cta-h2">
+        Tu auto merece
+        <em>lo mejor.</em>
+      </h2>
+      <p class="cta-sub">
+        Envíanos un mensaje y te respondemos para coordinar<br>
+        tu diagnóstico sin costo.
+      </p>
+    </div>
+    <div class="cta-actions">
+      <a href="https://wa.me/525611678378?text=Hola,%20quiero%20un%20diagn%C3%B3stico" class="btn-wa" target="_blank" rel="noopener" id="btn-wa">
+        <div class="bg-slide"></div>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        <span>Enviar mensaje por WhatsApp</span>
+      </a>
+      <a href="https://maps.app.goo.gl/MLTZ8irXsVxH7pXy9?g_st=ac" class="btn-map" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        Cómo llegar
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="ft-brand">The Body Shop<br>Studio</div>
+        <div class="ft-tagline">Perfección automotriz<br>desde hace más de<br>una década.</div>
+      </div>
+      <div>
+        <div class="ft-col-h">Ubicación</div>
+        <div class="ft-addr">
+          Av. Ing. Alfredo Robles<br>
+          Dominguez 100<br>
+          Vallejo, Gustavo A. Madero<br>
+          Ciudad de México · C.P. 07870
+        </div>
+        <a href="https://maps.app.goo.gl/MLTZ8irXsVxH7pXy9?g_st=ac" class="ft-map-link" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="12" height="12" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          Cómo llegar
+        </a>
+      </div>
+      <div>
+        <div class="ft-col-h">Respaldados por</div>
+        <div class="ft-addr">
+          Smart System de México<br>
+          Distribuidor Autorizado<br>
+          +50 años en la industria<br>
+          Productos certificados
+        </div>
+      </div>
+    </div>
+    <div class="footer-bot">
+      <div class="ft-copy">© 2026 THE BODY SHOP STUDIO · TODOS LOS DERECHOS RESERVADOS</div>
+      <div class="status-pill">
+        <div class="s-dot"></div>
+        <div class="s-txt">Sistema · Activo</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ── HEADER SCROLL ── */
+  const hdrInner = document.getElementById('hdr-inner');
+  window.addEventListener('scroll', () => {
+    hdrInner.classList.toggle('on', window.scrollY > 80);
+  }, { passive: true });
+
+  /* ── HERO PARALLAX ── */
+  gsap.to('#hero-bg', {
+    yPercent: 30,
+    ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
+
+  /* ── HERO ENTRANCE ── */
+  gsap.timeline({ defaults: { ease: 'power3.out' } })
+    .from('#h-eye',   { opacity: 0, y: 20, duration: .8, delay: .3 })
+    .from('#h-title', { opacity: 0, y: 50, duration: 1 }, '-=.4')
+    .from('#h-foot',  { opacity: 0, y: 25, duration: .8 }, '-=.5');
+
+  /* ── TRUST BAR ── */
+  gsap.from('.t-stat', {
+    opacity: 0, y: 30, stagger: .15, duration: .8, ease: 'power3.out',
+    scrollTrigger: { trigger: '#trust-bar', start: 'top 88%' }
+  });
+
+  /* ── FEATURES ── */
+  gsap.from('.fcard', {
+    opacity: 0, y: 70, stagger: .15, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: '.feat-grid', start: 'top 82%' }
+  });
+
+  /* ── PHILOSOPHY PARALLAX ── */
+  gsap.to('#philo-bg', {
+    yPercent: 18,
+    ease: 'none',
+    scrollTrigger: { trigger: '.philo', start: 'top bottom', end: 'bottom top', scrub: true }
+  });
+  gsap.from('#ph-left', {
+    opacity: 0, x: -60, duration: 1.2, ease: 'power3.out',
+    scrollTrigger: { trigger: '.philo-inner', start: 'top 78%' }
+  });
+  gsap.from('#ph-right', {
+    opacity: 0, x: 60, duration: 1.2, ease: 'power3.out',
+    scrollTrigger: { trigger: '.philo-inner', start: 'top 78%' }
+  });
+  gsap.from('.brand-pill', {
+    opacity: 0, y: 15, stagger: .07, duration: .6, ease: 'power3.out',
+    scrollTrigger: { trigger: '#ph-right', start: 'top 80%' }
+  });
+
+  /* ── TIMELINE PROCESO ── */
+  gsap.from('.tl-item', {
+    opacity: 0,
+    x: -50,
+    stagger: .13,
+    duration: .9,
+    ease: 'power3.out',
+    scrollTrigger: { trigger: '.timeline-wrap', start: 'top 82%' }
+  });
+
+  /* ── CTA ENTRANCE ── */
+  gsap.from('.cta-h2', {
+    opacity: 0, y: 40, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: '.cta-sec', start: 'top 80%' }
+  });
+  gsap.from('#btn-wa', {
+    opacity: 0, x: 40, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: '.cta-sec', start: 'top 75%' }
+  });
+
+  /* ── CARD SHUFFLER ── */
+  const shufflerEl = document.getElementById('shuffler');
+  const shCards    = Array.from(shufflerEl.querySelectorAll('.sh-card'));
+  let shTicker;
+
+  function shuffle() {
+    const top = shCards[0];
+    gsap.to(top, {
+      x: 40, y: -25, rotation: 10, opacity: 0, duration: .4, ease: 'power2.in',
+      onComplete() {
+        shufflerEl.appendChild(top);
+        shCards.push(shCards.shift());
+        const all = shufflerEl.querySelectorAll('.sh-card');
+        all[0].style.transform = 'rotate(-2deg)';
+        all[0].style.opacity   = '1';
+        all[1].style.transform = 'rotate(1.5deg) translateY(10px) scale(.97)';
+        all[1].style.opacity   = '.6';
+        all[2].style.transform = 'rotate(-.5deg) translateY(18px) scale(.94)';
+        all[2].style.opacity   = '.3';
+        gsap.fromTo(all[0],
+          { x: -40, y: -25, rotation: -10, opacity: 0 },
+          { x: 0, y: 0, rotation: -2, opacity: 1, duration: .5, ease: 'power3.out' }
+        );
+      }
+    });
+  }
+
+  ScrollTrigger.create({
+    trigger: '#fcard-1', start: 'top 70%',
+    onEnter:     () => { shTicker = setInterval(shuffle, 2800); },
+    onLeave:     () => clearInterval(shTicker),
+    onEnterBack: () => { shTicker = setInterval(shuffle, 2800); },
+    onLeaveBack: () => clearInterval(shTicker),
+  });
+
+  /* ── TYPEWRITER ── */
+  const twSeq = [
+    { id: 'tl1', text: '> Evaluando 247 puntos de inspección...', ms: 700 },
+    { id: 'tl2', text: '$ protocolo_calidad --nivel=máximo',       ms: 2400 },
+    { id: 'tl3', text: '> RESULTADO: Trabajo completado al 100%',  ms: 3800 },
+    { id: 'tl4', text: '> Tiempo invertido: el necesario.',         ms: 5200 },
+  ];
+
+  function typeIn(id, text, done) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    let i = 0;
+    const iv = setInterval(() => {
+      el.textContent = text.slice(0, ++i);
+      if (i >= text.length) { clearInterval(iv); if (done) done(); }
+    }, 32);
+  }
+
+  function runTW() {
+    twSeq.forEach(l => { const e = document.getElementById(l.id); if (e) e.textContent = ''; });
+    const last = twSeq.length - 1;
+    twSeq.forEach((l, i) => {
+      setTimeout(() => typeIn(l.id, l.text, i === last ? () => setTimeout(runTW, 3500) : null), l.ms);
+    });
+  }
+
+  ScrollTrigger.create({
+    trigger: '.feat-grid', start: 'top 65%', once: true,
+    onEnter: () => setTimeout(runTW, 400)
+  });
+
+  /* ── SCHEDULER CYCLE ── */
+  const schedRows = Array.from(document.querySelectorAll('.sched-row'));
+  let schedIdx = 2;
+  function cycleSched() {
+    schedRows.forEach(r => r.classList.remove('active'));
+    schedRows[schedIdx].classList.add('active');
+    schedIdx = schedIdx >= schedRows.length - 1 ? 2 : schedIdx + 1;
+  }
+  ScrollTrigger.create({
+    trigger: '.feat-grid', start: 'top 65%',
+    onEnter: () => setInterval(cycleSched, 2200)
+  });
+
+  /* ── MAGNETIC BUTTONS ── */
+  document.querySelectorAll('.btn-hero, .btn-wa, .btn-pill').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      gsap.to(btn, { x: (e.clientX - r.left - r.width/2) * .15, y: (e.clientY - r.top - r.height/2) * .15, duration: .4, ease: 'power2.out' });
+    });
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, { x: 0, y: 0, duration: .7, ease: 'elastic.out(1,.5)' });
+    });
+  });
+</script>
+</body>
+</html>
