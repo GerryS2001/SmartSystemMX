@@ -210,6 +210,20 @@
     @keyframes pulse-g { 0% { box-shadow: 0 0 0 0 rgba(110,231,183,.4); } 70% { box-shadow: 0 0 0 8px rgba(110,231,183,0); } 100% { box-shadow: 0 0 0 0 rgba(110,231,183,0); } }
     .s-txt { font-family: var(--font-data); font-size: .52rem; color: rgba(245,243,238,.35); letter-spacing: .2em; text-transform: uppercase; }
 
+    /* RUPES Servicio Técnico */
+    .rupes-feature { display: grid; grid-template-columns: 1fr 1.1fr; gap: 0; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.08); border-radius: 1.5rem; overflow: hidden; max-width: 1200px; margin: 4rem auto 0; position: relative; z-index: 2; }
+    .rupes-img { width: 100%; height: 100%; min-height: 22rem; object-fit: cover; object-position: center; display: block; }
+    .rupes-content { padding: 2.75rem; display: flex; flex-direction: column; justify-content: center; }
+    .rupes-tag { font-family: var(--font-data); font-size: .55rem; letter-spacing: .2em; text-transform: uppercase; color: var(--rojo); margin-bottom: .85rem; }
+    .rupes-tag::before { content: '// '; opacity: .5; }
+    .rupes-h3 { font-family: var(--font-title); font-weight: 700; font-size: 1.5rem; color: var(--blanco); margin-bottom: .85rem; line-height: 1.1; letter-spacing: -.02em; }
+    .rupes-desc { font-family: var(--font-data); font-size: .62rem; color: rgba(245,243,238,.42); line-height: 2; }
+    @media (max-width: 900px) { .rupes-feature { grid-template-columns: 1fr; } .rupes-img { min-height: 14rem; } }
+
+    /* Google Maps embed */
+    .map-embed { border-radius: 1.25rem; overflow: hidden; margin: 3rem 0 2rem; border: 1px solid rgba(17,17,17,.1); }
+    .map-embed iframe { display: block; width: 100%; height: 380px; border: 0; }
+
     /* Brand links */
     a.marca-pill { text-decoration: none; cursor: pointer; }
 
@@ -367,6 +381,17 @@
       </div>
     </div>
   </div>
+
+  <!-- RUPES Servicio Técnico -->
+  <div class="rupes-feature">
+    <img src="IMG/rupes-servicio.jpg" alt="Servicio Técnico RUPES — Smart System México" class="rupes-img">
+    <div class="rupes-content">
+      <div class="rupes-tag">Servicio Técnico Certificado</div>
+      <div class="rupes-h3">Tu máquina RUPES en las mejores manos</div>
+      <div class="rupes-desc">En Smart System México somos servicio técnico autorizado de RUPES. Realizamos mantenimiento preventivo y correctivo, reparaciones y revisión de máquinas orbitales y rotativas para que tu equipo siempre opere al 100 %.</div>
+    </div>
+  </div>
+
 </section>
 
 <!-- MARCAS -->
@@ -551,6 +576,12 @@
         <div class="bs-tesla-h3">Preparados para los autos del futuro</div>
         <div class="bs-tesla-desc">Nuestro equipo está capacitado para la reparación estética de vehículos eléctricos, incluyendo Tesla. Cuando la industria evolucionó, nosotros ya estábamos listos — porque no esperamos el cambio, lo anticipamos.</div>
       </div>
+    </div>
+    <div class="map-embed">
+      <iframe
+        src="https://maps.google.com/maps?q=Av.+Ing.+Alfredo+Robles+Dom%C3%ADnguez+100,+Vallejo,+Gustavo+A.+Madero,+07870,+Ciudad+de+M%C3%A9xico,+CDMX&output=embed"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        title="Ubicación The Body Shop Studio"></iframe>
     </div>
     <div class="bs-cta">
       <a href="https://wa.me/525611678378?text=Hola,%20quiero%20un%20diagn%C3%B3stico" class="btn-hero" target="_blank" rel="noopener" id="btn-bs">
