@@ -120,7 +120,15 @@
     /* CNDD */
     .cndd-sec { background: var(--negro); padding: 9rem 2rem; position: relative; overflow: hidden; }
     .cndd-sec-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1920&q=80') center/cover; opacity: .05; }
-    .cndd-inner { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+    .cndd-inner { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 4rem; }
+    .cndd-top { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .cndd-feature-img { width: 100%; height: auto; border-radius: 1.25rem; display: block; opacity: .9; }
+    .cndd-history-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .cndd-hist-card { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); border-radius: 1.25rem; overflow: hidden; transition: border-color .3s; }
+    .cndd-hist-card:hover { border-color: rgba(230,59,46,.25); }
+    .cndd-hist-img { width: 100%; height: auto; display: block; opacity: .82; transition: opacity .3s; }
+    .cndd-hist-card:hover .cndd-hist-img { opacity: 1; }
+    .cndd-hist-info { padding: 1.25rem 1.5rem; }
     .cndd-logo-text { font-family: var(--font-title); font-size: 3.5rem; font-weight: 800; letter-spacing: .06em; color: var(--blanco); line-height: 1; margin-bottom: .25rem; }
     .cndd-logo-text span { color: var(--rojo); }
     .cndd-full-name { font-family: var(--font-data); font-size: .52rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(245,243,238,.4); margin-bottom: 2rem; }
@@ -391,56 +399,53 @@
 <section class="cndd-sec" id="cndd">
   <div class="cndd-sec-bg"></div>
   <div class="cndd-inner">
-    <div>
-      <div class="stag lt">Nuestro Evento</div>
-      <div class="cndd-logo-text">CNDD <span>2026</span></div>
-      <div class="cndd-full-name">Congreso Nacional de Detalladores</div>
-      <p class="cndd-main-desc">
-        El evento más importante del detallado automotriz en México. Cada año reunimos marcas líderes, expertos y a la comunidad de profesionales para elevar los estándares de la industria — organizado desde sus inicios por Smart System de México.
-      </p>
-      <div class="cndd-current">
-        <div class="cndd-current-label">Edición Actual &nbsp;·&nbsp; 4ª Edición</div>
-        <div class="cndd-current-edition">IMPACTA · INNOVA · CONECTA</div>
-        <div class="cndd-current-venue">Hotel Racquet Cuernavaca &nbsp;·&nbsp; 30, 31 Jul &amp; 1 Ago 2026</div>
-      </div>
-    </div>
-    <div>
-      <div class="cndd-editions-title">Historial de Ediciones</div>
-      <div class="edition-timeline">
-        <div class="edition-tl-item current">
-          <div class="ed-year">2026</div>
-          <div>
-            <div class="ed-num">4ª Edición</div>
-            <div class="ed-place">Hotel Racquet Cuernavaca, Morelos</div>
-          </div>
-          <img src="IMG/cndd-2026.jpg" alt="CNDD 2026 — Gracias Detailers" class="ed-photo">
+
+    <!-- TOP: Info izquierda + foto 2026 derecha -->
+    <div class="cndd-top">
+      <div>
+        <div class="stag lt">Nuestro Evento</div>
+        <div class="cndd-logo-text">CNDD <span>2026</span></div>
+        <div class="cndd-full-name">Congreso Nacional de Detalladores</div>
+        <p class="cndd-main-desc">
+          El evento más importante del detallado automotriz en México. Cada año reunimos marcas líderes, expertos y a la comunidad de profesionales para elevar los estándares de la industria — organizado desde sus inicios por Smart System de México.
+        </p>
+        <div class="cndd-current">
+          <div class="cndd-current-label">Edición Actual &nbsp;·&nbsp; 4ª Edición</div>
+          <div class="cndd-current-edition">IMPACTA · INNOVA · CONECTA</div>
+          <div class="cndd-current-venue">Hotel Racquet Cuernavaca &nbsp;·&nbsp; 30, 31 Jul &amp; 1 Ago 2026</div>
         </div>
-        <div class="edition-tl-item">
+      </div>
+      <img src="IMG/cndd-2026.jpg" alt="CNDD 2026 — Gracias Detailers" class="cndd-feature-img">
+    </div>
+
+    <!-- BOTTOM: Ediciones anteriores en fila -->
+    <div class="cndd-history-row">
+      <div class="cndd-hist-card">
+        <img src="IMG/cndd-2025.jpg" alt="CNDD 2025 — Teotihuacan" class="cndd-hist-img">
+        <div class="cndd-hist-info">
           <div class="ed-year dim">2025</div>
-          <div>
-            <div class="ed-num">3ª Edición</div>
-            <div class="ed-place dim">Club Campestre Teotihuacan, Edo. Méx.</div>
-          </div>
-          <img src="IMG/cndd-2025.jpg" alt="CNDD 2025 — Teotihuacan" class="ed-photo">
+          <div class="ed-num">3ª Edición</div>
+          <div class="ed-place dim">Club Campestre Teotihuacan, Edo. Méx.</div>
         </div>
-        <div class="edition-tl-item">
+      </div>
+      <div class="cndd-hist-card">
+        <img src="IMG/cndd-2018.jpg" alt="CNDD 2018 — Querétaro" class="cndd-hist-img">
+        <div class="cndd-hist-info">
           <div class="ed-year dim">2018</div>
-          <div>
-            <div class="ed-num">2ª Edición</div>
-            <div class="ed-place dim">Querétaro</div>
-          </div>
-          <img src="IMG/cndd-2018.jpg" alt="CNDD 2018 — Querétaro" class="ed-photo">
+          <div class="ed-num">2ª Edición</div>
+          <div class="ed-place dim">Querétaro</div>
         </div>
-        <div class="edition-tl-item">
+      </div>
+      <div class="cndd-hist-card">
+        <img src="IMG/cndd-2017.jpg" alt="CNDD 2017 — Pachuca" class="cndd-hist-img">
+        <div class="cndd-hist-info">
           <div class="ed-year dim">2017</div>
-          <div>
-            <div class="ed-num">1ª Edición</div>
-            <div class="ed-place dim">Pachuca, Hidalgo</div>
-          </div>
-          <img src="IMG/cndd-2017.jpg" alt="CNDD 2017 — Pachuca" class="ed-photo">
+          <div class="ed-num">1ª Edición</div>
+          <div class="ed-place dim">Pachuca, Hidalgo</div>
         </div>
       </div>
     </div>
+
   </div>
 </section>
 
