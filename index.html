@@ -273,6 +273,12 @@
     .rupes-desc { font-family: var(--font-data); font-size: .62rem; color: rgba(245,243,238,.42); line-height: 2; }
     @media (max-width: 900px) { .rupes-feature { grid-template-columns: 1fr; } .rupes-img { min-height: 14rem; } }
 
+    /* Body Shop galería */
+    .bs-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 4rem; }
+    .bs-gal-img { width: 100%; height: 16rem; object-fit: cover; border-radius: 1rem; display: block; transition: transform .4s ease, opacity .3s; }
+    .bs-gal-img:hover { transform: scale(1.02); opacity: .92; }
+    @media (max-width: 900px) { .bs-gallery { grid-template-columns: 1fr; } .bs-gal-img { height: 14rem; } }
+
     /* Google Maps embed */
     .map-embed { border-radius: 1.25rem; overflow: hidden; margin: 3rem 0 2rem; border: 1px solid rgba(17,17,17,.1); }
     .map-embed iframe { display: block; width: 100%; height: 380px; border: 0; }
@@ -437,7 +443,7 @@
 
   <!-- RUPES Servicio Técnico -->
   <div class="rupes-feature">
-    <img src="IMG/rupes-servicio.jpg" alt="Servicio Técnico RUPES — Smart System México" class="rupes-img">
+    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=80" alt="Servicio Técnico RUPES — Smart System México" class="rupes-img"><!-- TODO: reemplazar por IMG/rupes-servicio.jpg cuando descargues la imagen del post de Facebook -->
     <div class="rupes-content">
       <div class="rupes-tag">Servicio Técnico Certificado</div>
       <div class="rupes-h3">Tu máquina RUPES en las mejores manos</div>
@@ -590,6 +596,11 @@
         <div class="bs-card-h3">Detallado Profesional</div>
         <div class="bs-card-desc">Pulido, cerámico y limpieza final con la mayor de las exigencias.</div>
       </div>
+    </div>
+    <div class="bs-gallery">
+      <img src="IMG/bs-auto-tesla.jpg"      alt="Tesla en Body Shop Studio"            class="bs-gal-img">
+      <img src="IMG/bs-limpieza-motor.jpg"  alt="Limpieza de motor — Body Shop Studio" class="bs-gal-img">
+      <img src="IMG/bs-motor.jpg"           alt="Motor — Body Shop Studio"             class="bs-gal-img">
     </div>
     <div class="bs-proto-title">Nuestro Proceso</div>
     <div class="bs-steps">
